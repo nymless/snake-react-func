@@ -1,0 +1,31 @@
+$board-width: 16;
+$board-height: 9;
+$square-size: 30px;
+$square-color: #bcbcbc;
+$apple-color: #fc0505;
+
+.board {
+    border-left: 1px solid $square-color;
+    border-top: 1px solid $square-color;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat($board-width, 1fr);
+    grid-template-rows: repeat($board-height, 1fr);
+    width: $square-size * $board-width;
+    height: $square-size * $board-height;
+    outline: none;
+}
+
+.square {
+    border-right: 1px solid $square-color;
+    border-bottom: 1px solid $square-color;
+    box-sizing: border-box;
+}
+
+.snake {
+    background-color: $square-color;
+}
+
+.apple {
+    background-color: $apple-color;
+}
