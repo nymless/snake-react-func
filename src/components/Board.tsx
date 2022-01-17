@@ -1,31 +1,32 @@
-import React, {KeyboardEventHandler, RefObject} from 'react';
-import {Square} from "./Square";
-import {Squares} from "./SnakeGame";
+import React from 'react'
+import { Square } from './Square'
+import { Squares } from './SnakeGame'
 
 interface BoardProps {
-    squares: Squares,
-    onKeyDown: (key: string) => void,
-    boardRef: RefObject<HTMLDivElement>
+    squares: Squares
+    tailBitten: boolean
+    borderCrossed: boolean
 }
 
 export const Board: React.FC<BoardProps> = (props) => {
-    const handleKeyDown: KeyboardEventHandler = (event) => {
-        props.onKeyDown(event.key)
-    }
-
     return (
-        <div className="board" ref={props.boardRef} tabIndex={1} onKeyDown={handleKeyDown}>
+        <div className="board">
             {props.squares.map((rowSquare, rowIndex) => {
                 return rowSquare.map((square, index) => {
                     return (
                         <Square
                             key={String(rowIndex) + String(index)}
                             isSnake={square.isSnake}
+                            isSnakeEnd={square.isSnakeEnd}
+                            isSnakeHead={square.isSnakeHead}
                             isApple={square.isApple}
                         />
                     )
-                });
+                })
             })}
+            {(props.tailBitten || props.borderCrossed) && (
+                <div className="gameOver">Game Over</div>
+            )}
         </div>
-    );
+    )
 }

@@ -1,31 +1,80 @@
 $board-width: 16;
 $board-height: 9;
 $square-size: 30px;
-$square-color: #bcbcbc;
-$apple-color: #fc0505;
+$main-color: rgba(192, 252, 0);
+$secondary-color: rgba(192, 252, 0, 0.31);
+$background-color: rgb(0, 0, 0);
+$main-font: bold 20px Arial;
 
-.board {
-    border-left: 1px solid $square-color;
-    border-top: 1px solid $square-color;
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat($board-width, 1fr);
-    grid-template-rows: repeat($board-height, 1fr);
-    width: $square-size * $board-width;
-    height: $square-size * $board-height;
-    outline: none;
-}
+.snakeGame {
+    font: $main-font;
+    color: $main-color;
+    background-color: $background-color;
+    width: fit-content;
+    padding: 20px;
+    border: 1px solid $main-color;
 
-.square {
-    border-right: 1px solid $square-color;
-    border-bottom: 1px solid $square-color;
-    box-sizing: border-box;
-}
+    .board {
+        border: 2px solid $secondary-color;
+        display: grid;
+        grid-template-columns: repeat($board-width, 1fr);
+        grid-template-rows: repeat($board-height, 1fr);
+        position: relative;
 
-.snake {
-    background-color: $square-color;
-}
+        .square {
+            width: $square-size;
+            height: $square-size;
+            border-radius: 5px;
+        }
 
-.apple {
-    background-color: $apple-color;
+        .snake {
+            background-color: $main-color;
+        }
+
+        .gameOver {
+            color: $main-color;
+            position: absolute;
+            font-size: 60px;
+            width: 100%;
+            height: 100%;
+            line-height: $square-size * $board-height;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    .gameInfo {
+        padding: 20px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        .startButton {
+            width: 130px;
+            text-align: center;
+            border: 1px solid $secondary-color;
+            cursor: pointer;
+            border-radius: 5px;
+
+            &:hover {
+                border-color: $main-color;
+            }
+
+            &:focus {
+                outline: 1px solid $main-color;
+            }
+        }
+
+        .score {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+
+    .apple {
+        display: block;
+        width: $square-size;
+        height: $square-size;
+    }
 }
