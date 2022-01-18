@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Board } from './Board'
 import './SnakeGame.scss'
 import { getRandomInt } from '../utils/getRandomInt'
+import { useScoreCount } from '../hooks/useScoreCount'
+import { useStartGame } from '../hooks/useStartGame'
+import { useScoreSave } from '../hooks/useScoreSave'
 
-const enum directions {
+export const enum directions {
     right = 'ArrowRight',
     down = 'ArrowDown',
     left = 'ArrowLeft',
@@ -38,11 +41,15 @@ export const SnakeGame: React.FC = () => {
     const [snake, setSnake] = useState(initialSnake)
     const [apple, setApple] = useState(initialApple)
     const [appleEaten, setAppleEaten] = useState(false)
-    const [gameStarted, setGameStarted] = useState(false)
     const [directionChanged, setDirectionChanged] = useState(false)
     const [tailBitten, setTailBitten] = useState(false)
     const [borderCrossed, setBorderCrossed] = useState(false)
-    const [scoreCount, setScoreCount] = useState(0)
+    const [gameStarted, setGameStarted] = useStartGame(
+        tailBitten,
+        borderCrossed
+    )
+    const [scoreCount, setScoreCount] = useScoreCount(appleEaten)
+    const bestScore = useScoreSave(tailBitten, borderCrossed, scoreCount)
 
     function resetState() {
         setSquares(initialSquares)
@@ -96,15 +103,6 @@ export const SnakeGame: React.FC = () => {
             }
         },
         [gameStarted, directionChanged, snake]
-    )
-
-    useEffect(
-        function stopGame() {
-            if (tailBitten || borderCrossed) {
-                setGameStarted(false)
-            }
-        },
-        [tailBitten, borderCrossed]
     )
 
     useEffect(
@@ -240,15 +238,6 @@ export const SnakeGame: React.FC = () => {
         [gameStarted, directionChanged, apple]
     )
 
-    useEffect(
-        function scoreCount() {
-            if (appleEaten) {
-                setScoreCount((prev) => prev + 1)
-            }
-        },
-        [appleEaten]
-    )
-
     const handleClickStart = () => {
         setGameStarted((gameStarted) => !gameStarted)
     }
@@ -290,6 +279,7 @@ export const SnakeGame: React.FC = () => {
                     />
                     <div>{'- ' + scoreCount}</div>
                 </div>
+                <div className="bestScore">{'Best score - ' + bestScore}</div>
             </div>
         </div>
     )
