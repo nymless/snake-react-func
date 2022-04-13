@@ -1,3 +1,8 @@
 # Snake game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Build on function-based React components, with React Hooks.
+
+Build preview: <https://nymless.github.io/snake-react-func/>
+
+* `yarn start`
+* `yarn build`
